@@ -1,6 +1,6 @@
-# grunt-test
+# grunt-portal
 
-> The best Grunt plugin ever.
+> Get a development environment up and running
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
@@ -8,79 +8,55 @@ This plugin requires Grunt `~0.4.5`
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-test --save-dev
+npm install grunt-portal --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('grunt-test');
+grunt.loadNpmTasks('grunt-portal');
 ```
 
-## The "test" task
+## The "portal" task
 
 ### Overview
-In your project's Gruntfile, add a section named `test` to the data object passed into `grunt.initConfig()`.
+In your project's Gruntfile, add a section named `portal` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
-  test: {
+  portal: {
     options: {
       // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
+    }
   },
 });
 ```
 
 ### Options
 
-#### options.separator
+#### options.blueprint
 Type: `String`
-Default value: `',  '`
+Default value: `''`
 
-A string value that is used to do something with whatever.
+Path to blueprint file which will be used to start a api mock server at the root of the server and Aglio documentation at `/doc/api`
 
-#### options.punctuation
+#### options.publicDir
 Type: `String`
-Default value: `'.'`
+Default value: ``
 
-A string value that is used to do something else with whatever else.
+Directory from which views and static files will be served.
 
-### Usage Examples
+#### options.docsDir
+Type: `String`
+Default value: ``
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+Files inside this directory will be served as documentation, You will be able to access `/doc/{pathname}.md` at `/doc/{pathname}`.
 
-```js
-grunt.initConfig({
-  test: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
+#### options.routes
+Type: `String`
+Default value: {}
 
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  test: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
+A map where object keys will be used as uri routes that route into local files.
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
