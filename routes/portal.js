@@ -5,7 +5,7 @@ module.exports = function(options) {
 
     var router = express.Router();
 
-    router.get('*', function(req, res) {
+    router.get('*', function(req, res, next) {
         var pathParts = req.path.split('/');
         var lanHome = pathParts[1];
         var lanPortal = pathParts[3];

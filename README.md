@@ -58,6 +58,24 @@ Default value: {}
 
 A map where object keys will be used as uri routes that route into local files.
 
+#### options.proxies
+Type: `String`
+Default value: {}
+
+A map where object keys will be used as uri paths to intercept and redirect to proxy.
+
+For example:
+
+    proxies: {
+        "/ws/*": {
+            host: "api.example.com",
+            port: "80"
+        }
+    }
+
+will redirect any request to `localhost:3000/ws/my_service.php` to `api.example.com/ws/my_service.php`.
+
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
