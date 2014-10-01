@@ -1,48 +1,35 @@
 var express = require('express');
 var join = require('path').join;
 var exists = require('fs').existsSync;
-var reject = require('underscore').reject;
+var _ = require('underscore');
 
 module.exports = function(options) {
 
     var router = express.Router();
 
-    router.get('*', function(req, res, next) {
-        var pathParts = req.path.split('/');
-        var lanHome = pathParts[1];
-        var lanPortal = pathParts[3];
-        var lanApplication = pathParts[4];
-        var lanStep = pathParts[5];
+    router.get('/:language([A-z]{2})_:country/apps/:portal/:application/:step?', function(req, res, next) {
 
-        var lanHomeParts = lanHome.toUpperCase().split('_');
-        var lanLanguage = lanHomeParts[0];
-        var lanCountry = lanHomeParts[1];
+        var initPath = join('/', options.appJsRoot, req.params.application);
+        var opts = req.params;
+        _.extend(opts, {
+            initScriptConfig: initPath + '.config.js',
+            initScript: initPath + '.js',
+            step: opts.step || 'init',
+            home: [opts.language, opts.country].join("_"),
+            language: opts.language.toUpperCase(),
+            country: opts.country.toUpperCase()
+        })
 
-        var initPath = join('/', options.appJsRoot, lanApplication);
-        var initScriptConfig = initPath + '.config.js';
-        var initScript = initPath + '.js';
-
-        var missingFiles = reject([initScriptConfig, initScript], function(path) {
-            var fullPath = join(process.cwd(), path);
-            return exists(fullPath);
+        var missingFiles = _.reject([opts.initScriptConfig, opts.initScript], function(path) {
+            return exists(join(process.cwd(), path));
         });
 
         if (missingFiles.length) {
-            return next(new Error("Missing files:\n" + missingFiles.join("\n")));
+            next(new Error("Missing files:\n" + missingFiles.join("\n")));
         } else {
-            res.render('index', {
-                initScriptConfig: initScriptConfig,
-                initScript: initScript,
-                home: lanHome || 'es_cl',
-                portal: lanPortal || 'personas',
-                application: lanApplication || 'certification',
-                step: lanStep || 'init',
-                language: lanLanguage || 'ES',
-                country: lanCountry || 'CL',
-                path: req.path
-            });
+            res.render('index', req.params);
         }
-        
+
     });
 
     return router;
