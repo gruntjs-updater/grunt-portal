@@ -1,5 +1,7 @@
 var express = require('express');
-var path = require('path');
+var join = require('path').join;
+var exists = require('fs').existsSync;
+var reject = require('underscore').reject;
 
 module.exports = function(options) {
 
@@ -16,27 +18,31 @@ module.exports = function(options) {
         var lanLanguage = lanHomeParts[0];
         var lanCountry = lanHomeParts[1];
 
-        var initScriptConfig, initScript;
+        var initPath = join('/', options.appJsRoot, lanApplication);
+        var initScriptConfig = initPath + '.config.js';
+        var initScript = initPath + '.js';
 
-        if(!lanApplication) {
-            next(new Error('Something went wrong :-('));
-            return;
-        }
-
-        initScriptConfig = '/LAN/app/dev/js/' + lanApplication + '.config.js';
-        initScript = '/LAN/app/dev/js/' + lanApplication + '.js';
-
-        res.render('index', {
-            initScriptConfig: initScriptConfig,
-            initScript: initScript,
-            home: lanHome || 'es_cl',
-            portal: lanPortal || 'personas',
-            application: lanApplication || 'certification',
-            step: lanStep || 'init',
-            language: lanLanguage || 'ES',
-            country: lanCountry || 'CL',
-            path: req.path
+        var missingFiles = reject([initScriptConfig, initScript], function(path) {
+            var fullPath = join(process.cwd(), path);
+            return exists(fullPath);
         });
+
+        if (missingFiles.length) {
+            return next(new Error("Missing files:\n" + missingFiles.join("\n")));
+        } else {
+            res.render('index', {
+                initScriptConfig: initScriptConfig,
+                initScript: initScript,
+                home: lanHome || 'es_cl',
+                portal: lanPortal || 'personas',
+                application: lanApplication || 'certification',
+                step: lanStep || 'init',
+                language: lanLanguage || 'ES',
+                country: lanCountry || 'CL',
+                path: req.path
+            });
+        }
+        
     });
 
     return router;
