@@ -1,16 +1,9 @@
-var ApiMock = require('api-mock');
-var express = require('express');
+var webmock = require('webmockjs');
 
 module.exports = function(options) {
 
-    var router = express.Router();
-
-    new ApiMock({
-        blueprintPath: options.blueprint,
-        express: function() { return router },
-        options: {}
-    }).run();
-
-    return router;
+    return webmock({
+        path: options.webmockDir
+    });
 
 }
