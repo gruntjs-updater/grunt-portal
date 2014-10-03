@@ -41,7 +41,7 @@
     "node-watch": "~0.3.4",
     "http-proxy": "~1.5.0",
     "underscore": "~1.7.0",
-    "webmockjs": "~0.1.2"
+    "webmockjs": "~0.2.0"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "^0.9.2",
