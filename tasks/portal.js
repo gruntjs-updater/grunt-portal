@@ -11,8 +11,10 @@
 module.exports = function(grunt) {
 
   grunt.registerTask('portal', 'Run development environment', function() {
-    var done = this.async();
-    var options = this.options();
+    var done, options = this.options();
+    if(!options.background) {
+    	this.async();
+    }
     var app = require('../lib/app')(options);
   });
 
