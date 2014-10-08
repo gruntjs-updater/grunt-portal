@@ -1,7 +1,7 @@
 {
   "name": "grunt-portal",
   "description": "Start a development environment.",
-  "version": "0.2.8",
+  "version": "0.3.0",
   "homepage": "https://github.com/reaktivo/grunt-portal",
   "author": {
     "name": "Marcel Miranda",
