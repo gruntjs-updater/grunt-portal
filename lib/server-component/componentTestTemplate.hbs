@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test page for {{component}}</title>
+  <link rel="stylesheet" href="http://ssl.pinkteam.uat.lan.com/layout/ui/1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://ssl.pinkteam.uat.lan.com/layout/ui/1/css/lan.min.css">
+  <link rel="stylesheet" href="http://ssl.pinkteam.uat.lan.com/layout/ui/1/css/procesos/procesos.min.css">
+  <script src="/bower_components/requirejs/require.js"></script>
+	<script type="text/javascript">
+		LAN = {
+			Environment: {
+				jsAppBaseUrl: '/app/',
+                jsLibBaseUrl: '',
+                env: 'development',
+                home: 'es_cl'
+			}
+		};
+	</script>
+  <script type="text/javascript" src="/app/dev/js/certification.config.js"></script>
+  <script>
+      require(['/component/componentTestApp.js', '{{component}}','backbone.marionette'], function(ComponentTestApp, Component, Marionette) {
+          var app = new ComponentTestApp({
+          	component: Component,
+          	stubs: '/test/functional/{{component}}Samples.json'
+          });
+      });
+  </script>
+</head>
+<body>
+  <div class="demo-container container checkinApp">
+    <section>
+      <div class="header">
+        <h1>Test page for {{component}}</h1>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
