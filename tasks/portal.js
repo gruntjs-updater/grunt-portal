@@ -10,7 +10,7 @@
 
 module.exports = function(grunt) {
 
-  grunt.registerTask('portal', 'Run development environment', function() {
+  grunt.registerMultiTask('portal', 'Run development environment', function() {
     var options = this.options();
     options.background = (options.background || this.flags.background);
     options.done = this.async();

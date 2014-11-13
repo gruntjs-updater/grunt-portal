@@ -25,8 +25,11 @@ In your project's Gruntfile, add a section named `portal` to the data object pas
 ```js
 grunt.initConfig({
   portal: {
-    options: {
-      // Task-specific options go here.
+    // dev is your target name
+    dev: {
+      options: {
+        // Task-specific options go here.
+      }
     }
   },
 });

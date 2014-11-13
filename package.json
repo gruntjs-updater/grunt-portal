@@ -35,6 +35,7 @@
     "debug": "~0.7.4",
     "express": "~4.2.0",
     "express-handlebars": "^1.1.0",
+    "getport": "^0.1.0",
     "hbs": "^2.7.0",
     "http-proxy": "~1.5.0",
     "jade": "^1.7.0",
