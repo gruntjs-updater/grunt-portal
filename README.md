@@ -43,11 +43,13 @@ Default value: `''`
 
 Path to blueprint file which will be used to start a api mock server at the root of the server and Aglio documentation at `/doc/api`
 
+
 #### options.publicDir
 Type: `String`
 Default value: ``
 
 Directory from which views and static files will be served.
+
 
 #### options.docsDir
 Type: `String`
@@ -55,11 +57,55 @@ Default value: ``
 
 Files inside this directory will be served as documentation, You will be able to access `/doc/{pathname}.md` at `/doc/{pathname}`.
 
+
+#### options.helpersDir
+Type: `String`
+Default value: ``
+
+Files inside this directory will be used as helpers for Handlebars. The file should be a node module file, and the filename (with .js extension) will be used as the helper name (removing the extension).
+
+For example, filename `compare.js`:
+
+    module.export = function(lvalue, rvalue, options) {
+
+        if (arguments.length < 3)
+            throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
+
+        operator = options.hash.operator || "==";
+
+        var operators = {
+            '==':       function(l,r) { return l == r; },
+            '===':      function(l,r) { return l === r; },
+            '!=':       function(l,r) { return l != r; },
+            '<':        function(l,r) { return l < r; },
+            '>':        function(l,r) { return l > r; },
+            '<=':       function(l,r) { return l <= r; },
+            '>=':       function(l,r) { return l >= r; },
+            'typeof':   function(l,r) { return typeof l == r; }
+        }
+
+        if (!operators[operator])
+            throw new Error("Handlerbars Helper 'compare' doesn't know the operator "+operator);
+
+        var result = operators[operator](lvalue,rvalue);
+
+        if( result ) {
+            return options.fn(this);
+        } else {
+            return options.inverse(this);
+        }
+
+    };
+
+Would be used as `{{#compare var_a var_b operator='!='}}`
+
+
 #### options.routes
 Type: `String`
 Default value: {}
 
 A map where object keys will be used as uri routes that route into local files.
+
 
 #### options.proxies
 Type: `String`
