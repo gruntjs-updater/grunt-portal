@@ -48,19 +48,26 @@ Path to blueprint file which will be used to start a api mock server at the root
 Type: `String`
 Default value: ``
 
-Directory from which views and static files will be served.
+Directory from which views and static files will be served. Also, it's the base directory for templates, if viewsDir, partialsDir or helpersDir are not specified.
 
 
-#### options.docsDir
+#### options.viewsDir
 Type: `String`
-Default value: ``
+Default value: `` (falls back to `options.publicDir + '/views'`)
 
-Files inside this directory will be served as documentation, You will be able to access `/doc/{pathname}.md` at `/doc/{pathname}`.
+Directory from which views will be served.
+
+
+#### options.partialsDir
+Type: `String`
+Default value: `` (falls back to `options.publicDir + '/partials'`)
+
+Directory from which partials will be registered.
 
 
 #### options.helpersDir
 Type: `String`
-Default value: ``
+Default value: `` (falls back to `options.publicDir + '/helpers'`)
 
 Files inside this directory will be used as helpers for Handlebars. The file should be a node module file, and the filename (with .js extension) will be used as the helper name (removing the extension).
 
@@ -98,6 +105,31 @@ For example, filename `compare.js`:
     };
 
 Would be used as `{{#compare var_a var_b operator='!='}}`
+
+
+#### options.docsDir
+Type: `String`
+Default value: ``
+
+Files inside this directory will be served as documentation, You will be able to access `/doc/{pathname}.md` at `/doc/{pathname}`.
+
+
+#### options.useHTML
+Type: `Boolean`
+Default value: false
+
+Defines wether to serve html files instead of the default Handlebars templates. Used to serve prebuilt HTML files.
+
+
+#### options.portalViewsPrefix
+Type: `string`
+Default value: ``
+
+Set a prefix for the Portal views. It can use url variables, for example:
+
+    portalViewsPrefix: "internationalized/:language_:country/:portal"
+
+When requiring `http://localhost:3000/es_ar/apps/personas/appname`, it would search for the file `viewsDir/internationalized/es_ar/personas/index.html` (or index.hbs).
 
 
 #### options.routes
